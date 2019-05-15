@@ -10,6 +10,7 @@ void setup() {
   s1.write(90);
   s2.attach(9);
   s2.write(90);
+  delay(5000);
 
 }
 
