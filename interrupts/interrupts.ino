@@ -3,7 +3,7 @@ byte state = LOW;
 
 void setup() {
   pinMode(13, OUTPUT);
-  attachInterrupt(digitalPinToInterrupt(2), blink,CHANGE);
+  attachInterrupt(digitalPinToInterrupt(2), link,CHANGE);
   Serial.begin(9600);
 }
 
@@ -12,6 +12,6 @@ void loop() {
   Serial.println(state);
 }
 
-void blink() {
+void link() {
   state = !state;
 }
