@@ -2,7 +2,7 @@
 
 #include <EEPROM.h>
 
-int prev = EEPROM.read(0);     
+byte prev = EEPROM.read(0);     
 void setup() {
   Serial.begin(115200);
   EEPROM.begin(512); 
