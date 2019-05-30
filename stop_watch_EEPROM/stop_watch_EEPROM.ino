@@ -2,32 +2,30 @@
 
 #include <EEPROM.h>
 
-int time;                     //keeps track of time for 50 days
-int prev = 0;
-
+int prev = EEPROM.read(0);     
 void setup() {
-  Serial.begin(9600);
-  EEPROM.get(0, prev);     
+  Serial.begin(115200);
+  EEPROM.begin(512); 
+  
 }
 void loop() {
   
   
-  time = millis()/1000;
-  EEPROM.update(0, prev);
   
-  if(prev != time)
+  
+  while(EEPROM.read(0) != 1000)
   {
     prev+=1;
-    EEPROM.put(0, prev);
+    EEPROM.write(0, prev);
+    EEPROM.commit();
     delay(996);
-    Serial.println(prev);
+    Serial.println(EEPROM.read(0));
   }
-  if(prev>=1000)
+  if(prev==1000)
   {
     Serial.println("TIME UP");
     delay(5000);
-    for (int i = 0 ; i < EEPROM.length() ; i++) 
-    EEPROM.write(i, 0);
+    EEPROM.write(0, 0);
     
   }
   
