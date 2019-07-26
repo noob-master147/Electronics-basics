@@ -21,7 +21,7 @@ digitalWrite(trigPin, HIGH);
 delayMicroseconds(10);
 digitalWrite(trigPin, LOW);
 duration = pulseIn(echoPin, HIGH);
-distance= duration*0.034/2;
+distance= constrain(duration*0.034/2, 4, 30);
 Serial.print("Distance: ");
 Serial.println(distance);
 }
