@@ -1,30 +1,35 @@
-#include <dht.h>
+#include "DHT.h"
 
+#define DHTPIN 2     // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT11   // DHT 11
+DHT dht(DHTPIN, DHTTYPE);
 
-dht DHT;
-//Constants
-#define DHT11_PIN 2     // DHT 22  (AM2302) - what pin we're connected to
-
-//Variables
-float hum;  //Stores humidity value
-float temp; //Stores temperature value
-
-void setup()
-{
-    Serial.begin(9600);
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
 }
 
-void loop()
-{
-    int chk = DHT.read11(DHT11_PIN);
-    //Read data and store it to variables hum and temp
-    hum = DHT.humidity;
-    temp= DHT.temperature;
-    //Print temp and humidity values to serial monitor
-    Serial.print("Humidity: ");
-    Serial.print(hum);
-    Serial.print(" %, Temp: ");
-    Serial.print(temp);
-    Serial.println(" Celsius");
-    delay(2000); //Delay 2 sec.
+void loop() {
+  // Reading temperature or humidity takes about 250 milliseconds!
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t)) {
+    Serial.println("No Reading");
+    return;
+  }
+
+  // Compute heat index in Fahrenheit (the default)
+  //float hif = dht.computeHeatIndex(f, h);
+  // Compute heat index in Celsius (isFahreheit = false)
+  //float hic = dht.computeHeatIndex(t, h, false);
+
+  Serial.print(F("Humidity: "));
+  Serial.print(h);
+  Serial.print(F(" Temperature: "));
+  Serial.println(t);
+  
+  
 }
